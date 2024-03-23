@@ -3,13 +3,17 @@ package com.hack.listener;
 import java.awt.BorderLayout;
 import java.awt.HeadlessException;
 import java.awt.Image;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.Socket;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.KeyStroke;
 
 public class UI extends javax.swing.JFrame {
     
@@ -24,7 +28,7 @@ public class UI extends javax.swing.JFrame {
         initComponents();
         
         // Sol Shift + Enter tuş kombinasyonunu dinle
-        command_input.getInputMap(javax.swing.JComponent.WHEN_FOCUSED).put(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ENTER, java.awt.event.InputEvent.SHIFT_DOWN_MASK), "shiftEnter");
+        command_input.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, InputEvent.SHIFT_DOWN_MASK), "shiftEnter");
 
         command_input.getActionMap().put("shiftEnter", new javax.swing.AbstractAction() {
             @Override
@@ -58,6 +62,8 @@ public class UI extends javax.swing.JFrame {
         listen_ip_checkbox = new javax.swing.JCheckBox();
         port_input = new javax.swing.JTextField();
         ip_address_input = new javax.swing.JTextField();
+        close_all_button = new javax.swing.JButton();
+        clear_all_button = new javax.swing.JButton();
         clear_button = new javax.swing.JButton();
         info2 = new javax.swing.JPanel();
         serveo_output_scroll = new javax.swing.JScrollPane();
@@ -73,7 +79,7 @@ public class UI extends javax.swing.JFrame {
         domain_address_input = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Listener v1.0");
+        setTitle("Listener v1.1");
         setName("listener"); // NOI18N
 
         session_list.setModel(new javax.swing.AbstractListModel<String>() {
@@ -126,7 +132,7 @@ public class UI extends javax.swing.JFrame {
         });
 
         command_input.setColumns(20);
-        command_input.setRows(5);
+        command_input.setRows(3);
         command_input_scroll.setViewportView(command_input);
 
         jLabel1.setText("Enter the command you want to send");
@@ -153,20 +159,24 @@ public class UI extends javax.swing.JFrame {
         });
 
         port_input.setText("8080");
-        port_input.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                port_inputActionPerformed(evt);
-            }
-        });
 
         ip_address_input.setText("0.0.0.0");
-        ip_address_input.addActionListener(new java.awt.event.ActionListener() {
+
+        close_all_button.setText("close all");
+        close_all_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ip_address_inputActionPerformed(evt);
+                close_all_buttonActionPerformed(evt);
             }
         });
 
-        clear_button.setText("clear all");
+        clear_all_button.setText("clear all");
+        clear_all_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clear_all_buttonActionPerformed(evt);
+            }
+        });
+
+        clear_button.setText("clear");
         clear_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clear_buttonActionPerformed(evt);
@@ -177,73 +187,78 @@ public class UI extends javax.swing.JFrame {
         listener1.setLayout(listener1Layout);
         listener1Layout.setHorizontalGroup(
             listener1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1073, Short.MAX_VALUE)
-            .addGroup(listener1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(listener1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(session_list_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(listener1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(listener1Layout.createSequentialGroup()
-                            .addComponent(screenshot_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(listen_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(camera_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(download_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(upload_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(clear_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(close_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(send_command_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addComponent(command_input_scroll)
-                        .addGroup(listener1Layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(ip_address_input)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(port_input, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(listen_ip_checkbox))
-                        .addComponent(command_output_scroll))
-                    .addContainerGap()))
+            .addGroup(listener1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(session_list_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(listener1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(listener1Layout.createSequentialGroup()
+                        .addComponent(screenshot_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(listen_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(camera_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(download_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(upload_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(close_all_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(close_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(send_command_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(command_input_scroll)
+                    .addGroup(listener1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ip_address_input)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(port_input, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(listen_ip_checkbox))
+                    .addComponent(command_output_scroll)
+                    .addGroup(listener1Layout.createSequentialGroup()
+                        .addComponent(clear_all_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(clear_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(535, 535, 535)))
+                .addContainerGap())
         );
         listener1Layout.setVerticalGroup(
             listener1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 525, Short.MAX_VALUE)
-            .addGroup(listener1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(listener1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(listener1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(session_list_scroll)
-                        .addGroup(listener1Layout.createSequentialGroup()
-                            .addComponent(command_output_scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(listener1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel1)
-                                .addComponent(listen_ip_checkbox)
-                                .addComponent(port_input, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(ip_address_input, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(command_input_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(listener1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(send_command_button)
-                                .addComponent(upload_button)
-                                .addComponent(download_button)
-                                .addComponent(camera_button)
-                                .addComponent(listen_button)
-                                .addComponent(screenshot_button)
-                                .addComponent(close_button)
-                                .addComponent(clear_button))))
-                    .addContainerGap()))
+            .addGroup(listener1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(listener1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(session_list_scroll)
+                    .addGroup(listener1Layout.createSequentialGroup()
+                        .addComponent(command_output_scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(listener1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(listen_ip_checkbox)
+                            .addComponent(port_input, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ip_address_input, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(command_input_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(listener1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(clear_all_button)
+                            .addComponent(clear_button))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(listener1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(send_command_button)
+                            .addComponent(upload_button)
+                            .addComponent(download_button)
+                            .addComponent(camera_button)
+                            .addComponent(listen_button)
+                            .addComponent(screenshot_button)
+                            .addComponent(close_button)
+                            .addComponent(close_all_button))))
+                .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Lissener", listener1);
+        jTabbedPane1.addTab("Listener", listener1);
 
         info2.setMaximumSize(new java.awt.Dimension(0, 0));
 
@@ -257,18 +272,8 @@ public class UI extends javax.swing.JFrame {
         jLabel2.setText("Enter the IP address to forward to");
 
         serveo_ip_address_input.setText("localhost");
-        serveo_ip_address_input.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                serveo_ip_address_inputActionPerformed(evt);
-            }
-        });
 
         connect_port_input.setText("8080");
-        connect_port_input.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                connect_port_inputActionPerformed(evt);
-            }
-        });
 
         tunnel_checkbox.setText("Start tunnel service");
         tunnel_checkbox.addActionListener(new java.awt.event.ActionListener() {
@@ -278,23 +283,12 @@ public class UI extends javax.swing.JFrame {
         });
 
         forward_port_input.setText("8080");
-        forward_port_input.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                forward_port_inputActionPerformed(evt);
-            }
-        });
 
         jLabel3.setText("Enter the port to connect to");
 
         jLabel4.setText("Enter the port to forward to");
 
         jLabel5.setText("Domain address (Private session)");
-
-        domain_address_input.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                domain_address_inputActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout info2Layout = new javax.swing.GroupLayout(info2);
         info2.setLayout(info2Layout);
@@ -314,7 +308,7 @@ public class UI extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(domain_address_input))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(serveo_output_scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE)
+                .addComponent(serveo_output_scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
                 .addContainerGap())
         );
         info2Layout.setVerticalGroup(
@@ -322,7 +316,7 @@ public class UI extends javax.swing.JFrame {
             .addGroup(info2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(info2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(serveo_output_scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
+                    .addComponent(serveo_output_scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
                     .addGroup(info2Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -379,7 +373,7 @@ public class UI extends javax.swing.JFrame {
             frame.add(scrollPane);
             frame.pack();
             frame.setVisible(true);
-        } catch (IndexOutOfBoundsException | NullPointerException | HeadlessException | IOException e) {
+        } catch (NullPointerException | HeadlessException | IOException e) {
             ErrorDialog.showError("Hata olustu.");
             System.out.println(e);
         }
@@ -420,6 +414,7 @@ public class UI extends javax.swing.JFrame {
         try {
             String output = send.commandExecution().toString().replaceAll("\\\\n", "\n").replaceAll("\"", "");
             command_output.setText(output);
+            command_input.setText("");
         } catch (IOException e) {
             ErrorDialog.showError("Hata olustu");
             System.out.println(e);
@@ -430,6 +425,9 @@ public class UI extends javax.swing.JFrame {
     private void close_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_close_buttonActionPerformed
         
         try {
+            send = new CommandSend(sessionList.selectedSocket(), "close");
+            String output = send.commandExecution().toString().replaceAll("\\\\n", "\n").replaceAll("\"", "");
+            command_output.setText("session closed");
             sessionList.selectedSocket().close();
             sessionList.deleteSession();
         } catch (IOException e) {
@@ -438,14 +436,6 @@ public class UI extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_close_buttonActionPerformed
-
-    private void ip_address_inputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ip_address_inputActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ip_address_inputActionPerformed
-
-    private void port_inputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_port_inputActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_port_inputActionPerformed
 
     private void listen_ip_checkboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listen_ip_checkboxActionPerformed
         
@@ -472,13 +462,18 @@ public class UI extends javax.swing.JFrame {
         }
     }
     
-    private void clear_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clear_buttonActionPerformed
+    private void close_all_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_close_all_buttonActionPerformed
+        for(Socket i: sessionList.allSessionList()){
+            try {
+                send = new CommandSend(i, "close");
+                String output = send.commandExecution().toString().replaceAll("\\\\n", "\n").replaceAll("\"", "");
+                command_output.setText("all session closed");
+            }catch (IOException e) {
+                System.out.println(e);
+            }
+        }
         sessionList.deleteAllSession();
-    }//GEN-LAST:event_clear_buttonActionPerformed
-
-    private void forward_port_inputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forward_port_inputActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_forward_port_inputActionPerformed
+    }//GEN-LAST:event_close_all_buttonActionPerformed
 
     private void tunnel_checkboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tunnel_checkboxActionPerformed
         String serveoCommand;
@@ -500,28 +495,25 @@ public class UI extends javax.swing.JFrame {
         } else {
             tunnelStop();
         }
-        
     }//GEN-LAST:event_tunnel_checkboxActionPerformed
+
+    private void clear_all_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clear_all_buttonActionPerformed
+        sessionList.deleteAllSession();
+    }//GEN-LAST:event_clear_all_buttonActionPerformed
+
+    private void clear_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clear_buttonActionPerformed
+        sessionList.deleteSession();
+    }//GEN-LAST:event_clear_buttonActionPerformed
 
     public void tunnelStop(){
         tunnel.stopTunnel();
     }
     
-    private void connect_port_inputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connect_port_inputActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_connect_port_inputActionPerformed
-
-    private void serveo_ip_address_inputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serveo_ip_address_inputActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_serveo_ip_address_inputActionPerformed
-
-    private void domain_address_inputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_domain_address_inputActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_domain_address_inputActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     javax.swing.JButton camera_button;
+    javax.swing.JButton clear_all_button;
     javax.swing.JButton clear_button;
+    javax.swing.JButton close_all_button;
     javax.swing.JButton close_button;
     javax.swing.JTextArea command_input;
     javax.swing.JScrollPane command_input_scroll;

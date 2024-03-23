@@ -8,14 +8,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
-
 public class CommandSend {
     
     private final Socket socket;
     private final String command;
+    private final GetOutput getOutput;
     
     public CommandSend(Socket socket, String command) {
+        this.getOutput = new GetOutput();
         this.socket = socket;
         this.command = command;
     }
@@ -40,7 +40,7 @@ public class CommandSend {
         // Komutu gönderir ve cevabı alır
         jsonSend(commandArray);
         try {
-            return GetOutput.jsonRecv(socket);
+            return getOutput.jsonRecv(socket);
         } catch (IOException e) {
             ErrorDialog.showError("Hata olustu");
             System.out.println(e);

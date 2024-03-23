@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Base64;
 import javax.imageio.ImageIO;
 
 public class Screenshot {
@@ -20,7 +21,7 @@ public class Screenshot {
         send = new CommandSend(socket, "screenshot");
         String data = send.commandExecution().toString().replaceAll("\"", "");
         
-        byte[] imageData = java.util.Base64.getDecoder().decode(data.getBytes("UTF-8"));
+        byte[] imageData = Base64.getDecoder().decode(data.getBytes("UTF-8"));
 
         // Bayt dizisinden bir BufferedImage oluşturun
         ByteArrayInputStream bis = new ByteArrayInputStream(imageData);

@@ -9,11 +9,13 @@ import java.net.SocketException;
 public class SessionListener extends Thread {
 
     private ConnectionInterface connectionInterface; // Geri çağırım için listener
+    private final GetOutput getOutput;
     private final int in_port;
     private final String in_ip;
     private ServerSocket serverSocket;
 
     public SessionListener(int port, String ip) {
+        this.getOutput = new GetOutput();
         this.in_port = port;
         this.in_ip = ip;
     }
@@ -34,7 +36,7 @@ public class SessionListener extends Thread {
             while (!serverSocket.isClosed()) {
                 try {
                     Socket socket = serverSocket.accept();
-                    String hostname = GetOutput.jsonRecv(socket).replaceAll("\"", "");
+                    String hostname = getOutput.jsonRecv(socket).replaceAll("\"", "");
                     if (connectionInterface != null) {
                         connectionInterface.onConnection(socket, hostname);
                     }

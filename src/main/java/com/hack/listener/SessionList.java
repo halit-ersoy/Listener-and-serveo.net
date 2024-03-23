@@ -38,4 +38,8 @@ public class SessionList {
         sessionList.removeAll(sessionList);
     }
     
+    public List<Socket> allSessionList(){
+        return sessionList;
+    }
+    
 }
